@@ -1,0 +1,113 @@
+<style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    form{
+        font-family: verdana;
+        font-size: 12px;
+    }
+    div {
+        font-family: verdana;
+        font-size: 9px;
+    }
+    input[type=text], select, textarea {
+      font-family: verdana;
+      font-size: 11px;
+      padding: 1px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    
+    label {
+      display: inline-block;
+    }
+    
+    input[type=submit] {
+      background-color: #04AA6D;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      float: left;
+    }
+    
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+    
+    .container {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    
+    .col-25 {
+      float: left;
+      width: 25%;
+      margin-top: 6px;
+    }
+    
+    .col-75 {
+      float: left;
+      width: 75%;
+      margin-top: 6px;
+    }
+    
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    
+    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+      .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+      }
+    }
+    </style>
+
+<form action="#" onsubmit="checkAppointment();return false">
+driverLastName: <input type="text" id="driverLastName"/><br>
+licenceNumber: <input type="text" id="licenceNumber"/><br>
+keyword: <input type="text" id="keyword"/><br>
+Attempt Number: <input type="number" id="attempt"/><br>
+From date: <input type="date" id="startDate" name="startDate"><br>
+<div id="posHTML"></div>
+<input type="submit"/>
+</form>
+<br><br>
+<div id="resp"></div>
+<div id="err"></div>
+
+
+<script>
+//Add more locations here.
+posLocs = {
+    1 : "31935 S Fraser Way #150, Abbotsford, BC V2T 5N7",
+    2 : "3880 Lougheed Hwy, Burnaby, BC V5C 6N4",
+    3 : "46052 Chilliwack Central Rd, Chilliwack, BC V2P 1J6",
+    6 : "22470 Dewdney Trunk Rd #175, Maple Ridge, BC V2X 5Z6",
+    8 : "1331 Marine Dr, North Vancouver, BC V7P 3E5",
+    9 : "4126 Macdonald St, Vancouver, BC V6L 2P2",
+    11 : "13426 78 Ave, Surrey, BC V3W 8J6",
+    73 : "1930 Oxford Connector, Port Coquitlam, BC V3C 0A4",
+    93 : "5300 No 3 Rd #402, Richmond, BC V6X 2X9",
+    153 : "19950 Willowbrook Dr j7, Langley, BC V2Y 1K9",
+    226 : "226 - unknown location",
+    269 : "10262 152A Street, Surrey, BC V3R 6T8",
+    270 : "6000 Production Way, Langley City, BC V3A 6L5",
+    271 : "13665 68 Avenue, Surrey, BC V3W 0Y6", 
+    272 : "100 Blue Mountain Street, Coquitlam, BC V3K 1A2",
+    274 : "4399 Wayburne Drive, Burnaby, BC V5G 3X7",
+    275 : "999 Kingsway, Vancouver, BC V5V 4Z7",
+    276 : "1320 3rd Avenue, New Westminster, BC V3M 5T4",
+    277 : "2885 Trethewey Street, Abbotsford, BC V2T 3R2"
+}
+var _0x2760=['10262\x20152A\x20Street,\x20Surrey,\x20BC\x20V3R\x206T8','\x20\x22lastName\x22:\x20\x22','93189MXhNDW','dayOfWeek','appointmentDt','5-R-','6000\x20Production\x20Way,\x20Langley\x20City,\x20BC\x20V3A\x206L5','name','input','onreadystatechange','Searching\x20for\x20location\x20','25407psgvLd','application/json','indexOf','date','startTm','getItem','lastname','err','createTextNode','setItem','attempt','226\x20-\x20unknown\x20location','4399\x20Wayburne\x20Drive,\x20Burnaby,\x20BC\x20V5G\x203X7','\x20\x22prfDaysOfWeek\x22:\x20\x22[0,1,2,3,4,5,6]\x22,','</font>','Authorization','licenceNumber','1320\x203rd\x20Avenue,\x20New\x20Westminster,\x20BC\x20V3M\x205T4','startDate','<font\x20color=\x27red\x27>Enter\x20Driver\x20last\x20name,\x20license\x20number\x20and\x20keyword.\x20Also,\x20select\x20atleast\x20one\x20location.</font>','160807saPrGH','posLocs_','\x20\x22licenseNumber\x22:\x20\x22','parse','send','post','{\x22drvrLastName\x22:\x22','getElementById','readyState','22470\x20Dewdney\x20Trunk\x20Rd\x20#175,\x20Maple\x20Ridge,\x20BC\x20V2X\x205Z6','createElement','type','Day\x20:\x20','36310VQpWQE','resp','push','<font\x20color=\x27green\x27>Date\x20:\x20','https://onlinebusiness.icbc.com/deas-api/v1/webLogin/webLogin','driverLastName','Lenght\x20=\x20','46052\x20Chilliwack\x20Central\x20Rd,\x20Chilliwack,\x20BC\x20V2P\x201J6','keyword','log','999\x20Kingsway,\x20Vancouver,\x20BC\x20V5V\x204Z7','<br>','13ubfVVM','getAllResponseHeaders','2LSUduE','value','localStorage','innerHTML','open','Bearer\x20','input[name=\x22posLocs\x22]:checked','substr','status','posHTML','checked','getDate','POST','setRequestHeader','13665\x2068\x20Avenue,\x20Surrey,\x20BC\x20V3W\x200Y6','\x20\x22aPosID\x22:\x20','length','true','label','querySelectorAll','Content-Type','appendChild','2885\x20Trethewey\x20Street,\x20Abbotsford,\x20BC\x20V2T\x203R2','Start\x20Time\x20:\x20','PUT','1930\x20Oxford\x20Connector,\x20Port\x20Coquitlam,\x20BC\x20V3C\x200A4','4126\x20Macdonald\x20St,\x20Vancouver,\x20BC\x20V6L\x202P2','checkbox','endTm','1577404MIJZxL','2EOopPo','13426\x2078\x20Ave,\x20Surrey,\x20BC\x20V3W\x208J6','input[name=\x22posLocs\x22]','345690cOySZv','\x22,\x22licenceNumber\x22:\x22','691247wmCEoU','1qGdBiK'];var _0x58b25d=_0x5372;function _0x5372(_0x2bf8a3,_0xbfbc5b){return _0x5372=function(_0x2760e5,_0x537237){_0x2760e5=_0x2760e5-0x12b;var _0x2061e2=_0x2760[_0x2760e5];return _0x2061e2;},_0x5372(_0x2bf8a3,_0xbfbc5b);}(function(_0x41eec1,_0x4a0672){var _0x326e1e=_0x5372;while(!![]){try{var _0x35b7c9=parseInt(_0x326e1e(0x165))*-parseInt(_0x326e1e(0x159))+parseInt(_0x326e1e(0x158))+parseInt(_0x326e1e(0x186))*parseInt(_0x326e1e(0x133))+parseInt(_0x326e1e(0x135))*parseInt(_0x326e1e(0x15c))+parseInt(_0x326e1e(0x156))+-parseInt(_0x326e1e(0x153))*-parseInt(_0x326e1e(0x179))+-parseInt(_0x326e1e(0x152));if(_0x35b7c9===_0x4a0672)break;else _0x41eec1['push'](_0x41eec1['shift']());}catch(_0x2adf4e){_0x41eec1['push'](_0x41eec1['shift']());}}}(_0x2760,0x651c4));var label,i=0x0;for(pos in posLocs){label=document[_0x58b25d(0x183)](_0x58b25d(0x147));var description=document[_0x58b25d(0x16d)](posLocs[pos]),checkbox=document[_0x58b25d(0x183)](_0x58b25d(0x162));checkbox[_0x58b25d(0x184)]=_0x58b25d(0x150),checkbox[_0x58b25d(0x161)]='posLocs',checkbox['id']=_0x58b25d(0x17a)+pos,checkbox['value']=pos,label[_0x58b25d(0x14a)](checkbox),label[_0x58b25d(0x14a)](description),document[_0x58b25d(0x180)](_0x58b25d(0x13e))['appendChild'](label);if(i%0x2==0x1)document[_0x58b25d(0x180)](_0x58b25d(0x13e))['appendChild'](document[_0x58b25d(0x183)]('br'));i++;}document[_0x58b25d(0x180)](_0x58b25d(0x177))[_0x58b25d(0x136)]=getToday();if((localStorage['getItem'](_0x58b25d(0x12c))!=0x0|!localStorage['getItem'](_0x58b25d(0x12c)))&(localStorage[_0x58b25d(0x16a)]('licenceNumber')!=0x0|!localStorage['getItem'](_0x58b25d(0x175)))&(localStorage[_0x58b25d(0x16a)](_0x58b25d(0x12f))!=0x0|!localStorage[_0x58b25d(0x16a)](_0x58b25d(0x12f)))&(localStorage[_0x58b25d(0x16a)](_0x58b25d(0x16f))!=0x0|!localStorage['getItem'](_0x58b25d(0x16f)))&(localStorage[_0x58b25d(0x16a)](_0x58b25d(0x177))!=0x0|!localStorage[_0x58b25d(0x16a)](_0x58b25d(0x177)))){document[_0x58b25d(0x180)]('driverLastName')['value']=localStorage[_0x58b25d(0x16a)](_0x58b25d(0x12c)),document[_0x58b25d(0x180)](_0x58b25d(0x175))[_0x58b25d(0x136)]=localStorage[_0x58b25d(0x16a)](_0x58b25d(0x175)),document[_0x58b25d(0x180)](_0x58b25d(0x12f))[_0x58b25d(0x136)]=localStorage[_0x58b25d(0x16a)]('keyword'),document[_0x58b25d(0x180)](_0x58b25d(0x16f))[_0x58b25d(0x136)]=localStorage[_0x58b25d(0x16a)](_0x58b25d(0x16f)),document[_0x58b25d(0x180)](_0x58b25d(0x177))[_0x58b25d(0x136)]=localStorage[_0x58b25d(0x16a)](_0x58b25d(0x177));for(p in posLocs){document[_0x58b25d(0x180)]('posLocs_'+p)[_0x58b25d(0x13f)]=localStorage[_0x58b25d(0x16a)](_0x58b25d(0x17a)+p)==_0x58b25d(0x146)?!![]:![];}}function checkAppointment(){var _0x51e70c=_0x58b25d,_0x5beb5e=document[_0x51e70c(0x180)]('driverLastName')[_0x51e70c(0x136)],_0x6a757d=document[_0x51e70c(0x180)](_0x51e70c(0x175))[_0x51e70c(0x136)],_0x43331e=document[_0x51e70c(0x180)](_0x51e70c(0x12f))['value'],_0x277459=document[_0x51e70c(0x180)](_0x51e70c(0x16f))[_0x51e70c(0x136)],_0x290bc0=document[_0x51e70c(0x180)](_0x51e70c(0x177))[_0x51e70c(0x136)];if(_0x5beb5e!=''&_0x6a757d!=''&_0x43331e!=''&_0x277459!=''&_0x290bc0!=''&document[_0x51e70c(0x148)](_0x51e70c(0x13b))[_0x51e70c(0x145)]>0x0){document['getElementById'](_0x51e70c(0x16c))[_0x51e70c(0x138)]='',window[_0x51e70c(0x137)][_0x51e70c(0x16e)]('driverLastName',_0x5beb5e),window['localStorage']['setItem'](_0x51e70c(0x175),_0x6a757d),window['localStorage'][_0x51e70c(0x16e)](_0x51e70c(0x12f),_0x43331e),window[_0x51e70c(0x137)][_0x51e70c(0x16e)](_0x51e70c(0x16f),_0x277459),window[_0x51e70c(0x137)]['setItem'](_0x51e70c(0x177),_0x290bc0);var _0x411a9d=document['querySelectorAll'](_0x51e70c(0x155));for(p in _0x411a9d){window[_0x51e70c(0x137)][_0x51e70c(0x16e)](_0x51e70c(0x17a)+_0x411a9d[p][_0x51e70c(0x136)],_0x411a9d[p][_0x51e70c(0x13f)]);}appointmentAPICall(_0x5beb5e,_0x6a757d,_0x43331e,_0x51e70c(0x15f)+_0x277459,_0x290bc0),document[_0x51e70c(0x180)]('resp')[_0x51e70c(0x138)]+=localStorage['getItem'](_0x51e70c(0x16b))?localStorage[_0x51e70c(0x16a)]('lastname'):'';}else console['log'](_0x51e70c(0x12d)+document[_0x51e70c(0x148)](_0x51e70c(0x13b))['length']),document[_0x51e70c(0x180)](_0x51e70c(0x16c))[_0x51e70c(0x138)]=_0x51e70c(0x178);}var accessToken='';function getToday(){var _0xe69fae=_0x58b25d,_0x5a4069=new Date(),_0xe610e7=_0x5a4069['getMonth']()+0x1,_0x1407fd=_0x5a4069[_0xe69fae(0x140)]();if(_0xe610e7<0xa)_0xe610e7='0'+_0xe610e7;if(_0x1407fd<0xa)_0x1407fd='0'+_0x1407fd;var _0x1ce925=_0x5a4069['getFullYear']()+'-'+_0xe610e7+'-'+_0x1407fd;return _0x1ce925;}function appointmentAPICall(_0x590549,_0x42aed2,_0x420dda,_0x10e8dd,_0x5af550){var _0x54db2b=_0x58b25d;document[_0x54db2b(0x180)](_0x54db2b(0x187))['innerHTML']='';var _0x550888=_0x54db2b(0x12b),_0x37655b=_0x54db2b(0x17f)+_0x590549+_0x54db2b(0x157)+_0x42aed2+'\x22,\x22keyword\x22:\x22'+_0x420dda+'\x22}',_0xf3953d=new XMLHttpRequest();return _0xf3953d[_0x54db2b(0x139)](_0x54db2b(0x14d),_0x550888),_0xf3953d[_0x54db2b(0x142)](_0x54db2b(0x149),_0x54db2b(0x166)),_0xf3953d[_0x54db2b(0x163)]=function(){var _0x136879=_0x54db2b;if(_0xf3953d[_0x136879(0x181)]===0x4&_0xf3953d[_0x136879(0x13d)]==0xc8){var _0x331563=_0xf3953d[_0x136879(0x134)]();accessToken=_0x331563[_0x136879(0x13c)](_0x331563[_0x136879(0x167)]('authorization')+0x16,_0x331563['indexOf']('\x0a')-0x16),_0x550888='https://onlinebusiness.icbc.com/deas-api/v1/web/getAvailableAppointments',method=_0x136879(0x17e),headers={'content-type':_0x136879(0x166),'Authorization':accessToken},posLocs={0x1:'31935\x20S\x20Fraser\x20Way\x20#150,\x20Abbotsford,\x20BC\x20V2T\x205N7',0x2:'3880\x20Lougheed\x20Hwy,\x20Burnaby,\x20BC\x20V5C\x206N4',0x3:_0x136879(0x12e),0x6:_0x136879(0x182),0x8:'1331\x20Marine\x20Dr,\x20North\x20Vancouver,\x20BC\x20V7P\x203E5',0x9:_0x136879(0x14f),0xb:_0x136879(0x154),0x49:_0x136879(0x14e),0x5d:'5300\x20No\x203\x20Rd\x20#402,\x20Richmond,\x20BC\x20V6X\x202X9',0x99:'19950\x20Willowbrook\x20Dr\x20j7,\x20Langley,\x20BC\x20V2Y\x201K9',0xe2:_0x136879(0x170),0x10d:_0x136879(0x15a),0x10e:_0x136879(0x160),0x10f:_0x136879(0x143),0x110:'100\x20Blue\x20Mountain\x20Street,\x20Coquitlam,\x20BC\x20V3K\x201A2',0x112:_0x136879(0x171),0x113:_0x136879(0x131),0x114:_0x136879(0x176),0x115:_0x136879(0x14b)};var _0x834938=[],_0x3cc1b7=document[_0x136879(0x148)](_0x136879(0x13b)),_0x447405=[];for(var _0x3732a4=0x0;_0x3732a4<_0x3cc1b7[_0x136879(0x145)];_0x3732a4++){_0x447405[_0x136879(0x188)](_0x3cc1b7[_0x3732a4]['value']);}for(id in _0x447405){_0x834938[id]=new XMLHttpRequest(),console['log']('Calling\x20id\x20-\x20'+_0x447405[id]),reqJson='{'+_0x136879(0x144)+_0x447405[id]+',\x20'+'\x20\x22examType\x22:\x20\x22'+_0x10e8dd+'\x22,'+'\x20\x22examDate\x22:\x20\x22'+_0x5af550+'\x22,'+'\x20\x22ignoreReserveTime\x22:\x20false\x20,'+_0x136879(0x172)+'\x20\x22prfPartsOfDay\x22:\x20\x22[0,1]\x22,'+_0x136879(0x15b)+_0x590549+'\x22,'+_0x136879(0x17b)+_0x42aed2+'\x22'+'\x20}',_0x834938[id]['open'](_0x136879(0x141),_0x550888,![]),_0x834938[id][_0x136879(0x142)](_0x136879(0x149),'application/json'),_0x834938[id][_0x136879(0x142)](_0x136879(0x174),_0x136879(0x13a)+accessToken),_0x834938[id]['onreadystatechange']=function(){var _0x5a4804=_0x136879;if(_0x834938[id]['readyState']===0x4){document[_0x5a4804(0x180)](_0x5a4804(0x187))[_0x5a4804(0x138)]+=_0x5a4804(0x132)+_0x5a4804(0x164)+posLocs[_0x447405[id]];if(_0x834938[id]['responseText'][_0x5a4804(0x145)]>0x2){document[_0x5a4804(0x180)](_0x5a4804(0x187))['innerHTML']+=_0x5a4804(0x132)+('Appointment\x20for\x20location\x20ID\x20'+_0x447405[id]+'\x20&\x20<font\x20color=\x27green\x27>Location\x20:\x20'+posLocs[_0x447405[id]]+'</font>');var _0x419c1f=JSON[_0x5a4804(0x17c)](_0x834938[id]['responseText']);console[_0x5a4804(0x130)](_0x419c1f);for(var _0x10b59a=0x0;_0x10b59a<_0x419c1f[_0x5a4804(0x145)];_0x10b59a++){document[_0x5a4804(0x180)](_0x5a4804(0x187))['innerHTML']+=_0x5a4804(0x132)+(_0x5a4804(0x189)+_0x419c1f[_0x10b59a][_0x5a4804(0x15e)][_0x5a4804(0x168)]+_0x5a4804(0x173)),document[_0x5a4804(0x180)](_0x5a4804(0x187))[_0x5a4804(0x138)]+=_0x5a4804(0x132)+(_0x5a4804(0x185)+_0x419c1f[_0x10b59a]['appointmentDt'][_0x5a4804(0x15d)]),document[_0x5a4804(0x180)]('resp')['innerHTML']+=_0x5a4804(0x132)+(_0x5a4804(0x14c)+_0x419c1f[_0x10b59a][_0x5a4804(0x169)]),document[_0x5a4804(0x180)](_0x5a4804(0x187))[_0x5a4804(0x138)]+=_0x5a4804(0x132)+('End\x20Time\x20:\x20'+_0x419c1f[_0x10b59a][_0x5a4804(0x151)]);}}else document[_0x5a4804(0x180)]('resp')[_0x5a4804(0x138)]+='\x20--\x20'+'Appointment\x20NOT\x20FOUND.';}},_0x834938[id]['send'](reqJson);}}},_0xf3953d[_0x54db2b(0x17d)](_0x37655b),console[_0x54db2b(0x130)]('final\x20'+_0xf3953d[_0x54db2b(0x181)]),accessToken;}
+</script>
