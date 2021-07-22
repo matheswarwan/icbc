@@ -1,4 +1,4 @@
-import requests, json, time, datetime, os
+import requests, json, time, datetime, os, platform
 from time import sleep
 from datetime import datetime, timedelta
 
@@ -32,7 +32,7 @@ class AccessToken:
 # 	"startDate": "2021-07-01"
 # }
 
-posIds = [1,2,3,6,8,9,11,73,93,153,269,270,271,272,274,275,276,277]
+posIds = [1,2,3,6,8,9,11,73,93,153,269,270,271,272,274,275,276,277,220,252]
 posLocs = {
             1 : "31935 S Fraser Way #150, Abbotsford, BC V2T 5N7",
             2 : "3880 Lougheed Hwy, Burnaby, BC V5C 6N4",
@@ -52,7 +52,9 @@ posLocs = {
             274 : "4399 Wayburne Drive, Burnaby, BC V5G 3X7",
             275 : "999 Kingsway, Vancouver, BC V5V 4Z7",
             276 : "1320 3rd Avenue, New Westminster, BC V3M 5T4",
-            277 : "2885 Trethewey Street, Abbotsford, BC V2T 3R2"
+            277 : "2885 Trethewey Street, Abbotsford, BC V2T 3R2",
+            220 : "474 S Fletcher Rd, Gibsons, BC V0N 1V0",
+            252 : "5755 Cowrie St, Sechelt, BC V0N 3A0"
         }
 
 # Functions
@@ -115,7 +117,7 @@ while True:
                     print("EndTime: " + r['endTm'])
                     print("x-x-x-x-x-x-x-x")
                     # Alert sound
-                    if datetime.strptime(r['appointmentDt']['date'], '%Y-%m-%d').month <= alertMonth and datetime.strptime(r['appointmentDt']['date'], '%Y-%m-%d').year <= alertYear :
+                    if platform.system() == 'Darwin' and datetime.strptime(r['appointmentDt']['date'], '%Y-%m-%d').month <= alertMonth and datetime.strptime(r['appointmentDt']['date'], '%Y-%m-%d').year <= alertYear :
                         os.system('afplay '+alertMP3Location)
                 # sendEmail(posLocs[posId], json.dumps(resp))
         print('------------END : Checking for appointment at ' + time.ctime() + '---------')                
