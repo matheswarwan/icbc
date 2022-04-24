@@ -1,12 +1,13 @@
 import requests, json, time, datetime, os, platform
 from time import sleep
 from datetime import datetime, timedelta
+import winsound
 
 # Execution time config
 totalRunTime = 60 #mins
 gapBetweenRuns = 5*60 #seconds
-alertMonth = 9 # alert for slots available before 'September'
-alertYear = 2021
+alertMonth = 7 # alert for slots available for this month
+alertYear = 2022
 
 # Login details 
 driverLastName = ""
@@ -17,7 +18,7 @@ examDate = (datetime.now() + timedelta(days=1) ).strftime('%Y-%m-%d') # Tomorrow
 # datetime.today().strftime('%Y-%m-%d') #Today
 
 # Alert tone details 
-alertMP3Location="/System/Library/Sounds/Funk.aiff"
+alertMP3Location="alert.mp3"
 
 #Global variable
 class AccessToken:
@@ -62,7 +63,7 @@ def getAccessToken():
     sleep(3) # if token is generated often, service returns error
     loginURL = 'https://onlinebusiness.icbc.com/deas-api/v1/webLogin/webLogin'
     loginbody = {"drvrLastName":driverLastName,"licenceNumber":licenceNumber,"keyword":keyword}
-    loginheaders = { 'content-type': 'application/json' }
+    loginheaders = { 'content-type': 'application/json', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     resLogin = requests.put(loginURL, data = json.dumps(loginbody), headers= loginheaders )
     print('Login successful and received below auth token..')
     print(resLogin.headers['Authorization'])
@@ -78,7 +79,8 @@ def getAvailableAppointments(accessToken):
     method = 'post'
     headers =   {
                 'content-type': 'application/json',
-                'Authorization' : accessToken
+                'Authorization' : accessToken,
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
                 }   
     reqJson = {
                 "aPosID": posId,
@@ -117,8 +119,8 @@ while True:
                     print("EndTime: " + r['endTm'])
                     print("x-x-x-x-x-x-x-x")
                     # Alert sound
-                    if platform.system() == 'Darwin' and datetime.strptime(r['appointmentDt']['date'], '%Y-%m-%d').month <= alertMonth and datetime.strptime(r['appointmentDt']['date'], '%Y-%m-%d').year <= alertYear :
-                        os.system('afplay '+alertMP3Location)
+                    if datetime.strptime(r['appointmentDt']['date'], '%Y-%m-%d').month == alertMonth and datetime.strptime(r['appointmentDt']['date'], '%Y-%m-%d').year == alertYear :
+                        winsound.PlaySound('alert.mp3', winsound.SND_FILENAME|winsound.SND_NOWAIT)
                 # sendEmail(posLocs[posId], json.dumps(resp))
         print('------------END : Checking for appointment at ' + time.ctime() + '---------')                
         sleep(gapBetweenRuns) # Wait for these many seconds before checking again
